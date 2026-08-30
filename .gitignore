@@ -1,0 +1,20 @@
+exp/
+*.ckpt
+*.gz
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.DS_Store
+*.egg-info/
+build/
+dist/
+
+# legacy checkpoints are kept deliberately (21 MB total, well under GitHub limits)
+!legacy/checkpoints/
+!legacy/checkpoints/*.ckpt
+
+# staged for review, not part of the project
+ToBeDeleted/
+
+# staged for GitHub Release upload, not committed
+release_assets/

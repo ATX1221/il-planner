@@ -1,0 +1,19 @@
+# @package _global_
+job_name: bc_model_v1
+py_func: train
+objective_aggregate_mode: mean
+
+defaults:
+  # No data_augmentation override: default_training.yaml already defaults it to null.
+  # kinematic_agent_augmentation is deliberately NOT used - it operates on the
+  # `Agents` feature this model no longer builds, and it was the source of the SIGFPE.
+  - override /objective:
+      - imitation_objective
+  - override /splitter: nuplan
+  - override /model: bc_model_v1
+  - override /scenario_filter: training_scenarios
+  - override /training_metric:
+      - avg_displacement_error
+      - avg_heading_error
+      - final_displacement_error
+      - final_heading_error

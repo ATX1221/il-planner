@@ -1,0 +1,32 @@
+# @package _global_
+# K=6, no ego history, agent-prediction aux task, 80 poses, 13.4k mini cache.
+# Four changes at once, so none is individually attributable. Superseded by the 635k runs.
+job_name: tf_multi_noego_agents_mini13k
+py_func: train
+objective_aggregate_mode: sum   # NOT mean - see AgentPredictionObjective's docstring
+
+defaults:
+  - override /objective:
+      - wta_objective
+      - agent_prediction_objective
+  - override /splitter: nuplan
+  - override /model: tf_multi
+  - override /scenario_filter: training_scenarios
+  - override /training_metric:
+      - avg_displacement_error
+      - avg_heading_error
+      - final_displacement_error
+      - final_heading_error
+      - min_ade_6
+
+# Model settings that define this run, set here rather than on the command line so the recipe
+# lives in one file and cannot be half-applied.
+model:
+  num_modes: 6
+  predict_agents: true
+  use_ego_history: false
+  state_dropout: 0.75
+  num_output_features: 240          # 80 * 3
+  future_trajectory_sampling:
+    num_poses: 80                   # 0.1 s spacing, matches the LQR tracker
+    time_horizon: 8.0

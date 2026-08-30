@@ -1,0 +1,30 @@
+# @package _global_
+# Single-mode L2, ego history ON. Same cache and poses as tf_multi_noego_balanced635k,
+# so the pair isolates modes + ego history.
+# 80 poses is mandatory: the trajectory target is cached under the fixed name "trajectory"
+# with no dependence on num_poses, so a 16-pose head would silently load 80-pose targets.
+# Test14-random NR-CLS 0.5184.
+job_name: tf_single_ego_balanced635k
+py_func: train
+objective_aggregate_mode: mean
+
+defaults:
+  # Single-mode model - there are no modes to take a winner over, so plain imitation.
+  - override /objective:
+      - imitation_objective
+  - override /splitter: nuplan
+  - override /model: tf_single
+  - override /scenario_filter: training_scenarios
+  - override /training_metric:
+      # no min_ade_6: needs a mode dimension
+      - avg_displacement_error
+      - avg_heading_error
+      - final_displacement_error
+      - final_heading_error
+
+model:
+  use_ego_history: true           
+  num_output_features: 240        # 80 * 3
+  future_trajectory_sampling:
+    num_poses: 80
+    time_horizon: 8.0

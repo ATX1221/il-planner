@@ -1,0 +1,20 @@
+# @package _global_
+# Multi-mode head trained with plain L2 rather than winner-take-all - the step before
+# tf_multi_ego_mini13k. Kept for reference.
+job_name: tf_multi_ego_mini13k_l2
+py_func: train
+objective_aggregate_mode: mean
+
+defaults:
+  # Stock imitation_objective on purpose: the heading weight is deferred so that tf_single's
+  # score is directly comparable to v1's 0.2932.
+  - override /objective:
+      - imitation_objective
+  - override /splitter: nuplan
+  - override /model: tf_multi
+  - override /scenario_filter: training_scenarios
+  - override /training_metric:
+      - avg_displacement_error
+      - avg_heading_error
+      - final_displacement_error
+      - final_heading_error

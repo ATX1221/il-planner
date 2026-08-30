@@ -1,0 +1,34 @@
+_target_: il_planner.models.transformer_planner.TransformerPlanner
+_convert_: 'all'
+
+hidden_size: 128
+num_output_features: 48          # must equal future_trajectory_sampling.num_poses * 3
+num_modes: 6
+num_heads: 8
+encoder_depth: 2
+dropout: 0.1
+
+# Auxiliary head predicting other agents' futures. Declared here so `model.predict_agents=`
+# is a valid override - hydra runs in struct mode and rejects undeclared keys.
+predict_agents: false
+
+# false = ego token comes from the PRESENT state only, not its 21-step past.
+# See il_planner/models/ego_state_encoder.py.
+use_ego_history: true
+state_channel: 6                 # x, y, heading, vel_x, accel_x, steering_angle
+state_dropout: 0.75              # per-sample hiding of vel/accel/steering; ignored if use_ego_history
+
+feature_builder:
+  _target_: il_planner.features.simple_feature.SimpleFeatureBuilder
+  _convert_: 'all'
+  radius: 50.0
+  history_horizon: 2.0
+  sample_interval: 0.1
+  max_agents: 32
+  map_sample_points: 20
+
+future_trajectory_sampling:
+  _target_: nuplan.planning.simulation.trajectory.trajectory_sampling.TrajectorySampling
+  _convert_: 'all'
+  num_poses: 16
+  time_horizon: 8.0

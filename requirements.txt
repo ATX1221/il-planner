@@ -1,0 +1,43 @@
+# Pinned to the versions this project was developed and evaluated against.
+#
+# Two deliberate departures from nuplan-devkit's own requirements_torch.txt:
+#   torch      it pins 1.9.0, too old for nn.TransformerEncoderLayer(norm_first=True)
+#   torchvision  pinned to match torch 2.8 rather than the devkit's cu111 build
+# torch-scatter is in the devkit's list but nothing here imports it, and its 2.0.9 build is
+# ABI-tied to torch 1.9, so it is omitted.
+nuplan-devkit==1.2.2
+
+torch==2.8.0
+torchvision==0.23.0
+pytorch-lightning==1.3.8
+torchmetrics==0.7.2
+tensorboard==2.11.2
+
+numpy==1.23.4
+scipy==1.13.1
+pandas==2.3.3
+pyarrow==21.0.0
+shapely==2.0.7
+geopandas==1.0.1
+Fiona==1.10.1
+rasterio==1.3.11
+pyogrio==0.11.1
+rtree==1.4.1
+opencv-python==4.5.1.48
+SQLAlchemy==1.4.27
+hydra-core==1.1.0rc1
+ray==1.13.0
+protobuf==3.20.3
+setuptools==59.5.0
+
+boto3==1.24.59
+botocore==1.27.59
+aioboto3==11.0.1
+aiobotocore==2.4.2
+s3fs==2023.3.0
+urllib3==1.26.20
+
+bokeh==2.4.3
+matplotlib==3.9.4
+tqdm==4.68.3
+pytest==8.4.2

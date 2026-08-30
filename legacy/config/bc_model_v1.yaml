@@ -1,0 +1,27 @@
+_target_: legacy.models.BC_model_v1.BasicVectorMapMLP
+_convert_: 'all'
+
+# Model setup
+hidden_size: 128
+num_output_features: 48        # must equal future_trajectory_sampling.num_poses * 3 (x, y, heading)
+
+# Feature builder. Nested _target_ is instantiated recursively by hydra, so the
+# model receives a real SimpleFeatureBuilder object - the same pattern planTF.yaml uses.
+# NOTE: T is derived from history_samples inside the model, so there is no
+# separate history_steps entry here to keep in sync.
+feature_builder:
+  _target_: il_planner.features.simple_feature.SimpleFeatureBuilder
+  _convert_: 'all'
+  radius: 50.0
+  history_horizon: 2.0
+  sample_interval: 0.1
+  max_agents: 32
+  map_sample_points: 20        # unused until _get_map_features is implemented
+
+# Parameters for the predicted trajectory (the model's OUTPUT spec).
+# Also drives EgoTrajectoryTargetBuilder, i.e. what the loss compares against.
+future_trajectory_sampling:
+  _target_: nuplan.planning.simulation.trajectory.trajectory_sampling.TrajectorySampling
+  _convert_: 'all'
+  num_poses: 16
+  time_horizon: 8.0

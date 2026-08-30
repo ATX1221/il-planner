@@ -1,0 +1,20 @@
+# @package _global_
+# K=6 winner-take-all, ego history ON, 16 poses, 13.4k mini cache.
+job_name: tf_multi_ego_mini13k
+py_func: train
+objective_aggregate_mode: mean
+
+defaults:
+  - override /objective:
+      - wta_objective
+  - override /splitter: nuplan
+  - override /model: tf_multi
+  - override /scenario_filter: training_scenarios
+  - override /training_metric:
+      - avg_displacement_error
+      - avg_heading_error
+      - final_displacement_error
+      - final_heading_error
+      # Needs predictions["modes"], so tf_multi-only - tf_single emits a single
+      # trajectory and would KeyError on the first batch.
+      - min_ade_6

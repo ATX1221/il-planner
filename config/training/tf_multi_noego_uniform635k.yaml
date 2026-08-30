@@ -1,0 +1,31 @@
+# @package _global_
+# Control for tf_multi_noego_balanced635k. Identical model and count; the cache is built
+# with PlanTF's filter instead (num_scenarios_per_type: null + limit_total_scenarios),
+# giving 634,630 scenarios at 0.809% turns rather than 6.29%.
+# Test14-random NR-CLS 0.5644.
+job_name: tf_multi_noego_uniform635k
+py_func: train
+objective_aggregate_mode: mean
+
+defaults:
+  - override /objective:
+      - wta_objective
+  - override /splitter: nuplan
+  - override /model: tf_multi
+  - override /scenario_filter: training_scenarios
+  - override /training_metric:
+      - avg_displacement_error
+      - avg_heading_error
+      - final_displacement_error
+      - final_heading_error
+      - min_ade_6
+
+model:
+  num_modes: 6
+  predict_agents: false
+  use_ego_history: false
+  state_dropout: 0.75
+  num_output_features: 240
+  future_trajectory_sampling:
+    num_poses: 80
+    time_horizon: 8.0

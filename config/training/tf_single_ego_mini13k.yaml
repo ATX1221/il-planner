@@ -1,0 +1,20 @@
+# @package _global_
+# Single-mode L2, ego history ON, 16 poses, 13.4k mini cache.
+# Earliest transformer baseline; the 13.4k reference point for data scaling.
+job_name: tf_single_ego_mini13k
+py_func: train
+objective_aggregate_mode: mean
+
+defaults:
+  # Stock imitation_objective: this is the SINGLE-mode model, there are no modes to
+  # take a winner over.
+  - override /objective:
+      - imitation_objective
+  - override /splitter: nuplan
+  - override /model: tf_single
+  - override /scenario_filter: training_scenarios
+  - override /training_metric:
+      - avg_displacement_error
+      - avg_heading_error
+      - final_displacement_error
+      - final_heading_error

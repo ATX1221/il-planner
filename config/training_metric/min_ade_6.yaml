@@ -1,0 +1,8 @@
+# Best-of-K displacement error. Pair it with avg_displacement_error, which grades
+# loc[argmax(pi)] - the mode actually driven. The GAP between the two is what mode
+# selection costs, in metres.
+#
+# The top-level key must match this file's stem: hydra merges a config group by that key.
+min_ade_6:
+  _target_: il_planner.metrics.min_ade_metric.MinADE
+  _convert_: 'all'

@@ -1,0 +1,8 @@
+wta_objective:
+  _target_: il_planner.objectives.wta_objective.WinnerTakesAllObjective
+  _convert_: 'all'
+
+  weight: 1.0         # scales the regression term
+  cls_weight: 1.0     # scales the mode-classification term. Lower it if the winner
+                      # histogram collapses onto one mode: cls is the only gradient the
+                      # LOSING modes receive, and it only ever pushes them down.

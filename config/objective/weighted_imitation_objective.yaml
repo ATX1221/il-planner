@@ -1,0 +1,6 @@
+weighted_imitation_objective:
+  _target_: il_planner.objectives.weighted_imitation_objective.WeightedImitationObjective
+  _convert_: 'all'
+
+  weight: 1.0             # scales the whole objective
+  heading_weight: 10.0    # scales ONLY the heading term (nuPlan's default is effectively 1.0)

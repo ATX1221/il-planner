@@ -1,0 +1,6 @@
+# Auxiliary agent-future prediction. Requires model.predict_agents=true and a feature
+# built with a future timeline (simple_feature.split_future).
+agent_prediction_objective:
+  _target_: il_planner.objectives.wta_objective.AgentPredictionObjective
+  _convert_: 'all'
+  weight: 1.0

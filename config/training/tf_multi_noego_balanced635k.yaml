@@ -1,0 +1,30 @@
+# @package _global_
+# Main model. K=6 winner-take-all, no ego history, no agent prediction, 80 poses.
+# Trained on the type-balanced 634,630-scenario cache (6.29% turns).
+# Test14-random NR-CLS 0.6215.
+job_name: tf_multi_noego_balanced635k
+py_func: train
+objective_aggregate_mode: mean    # single objective
+
+defaults:
+  - override /objective:
+      - wta_objective          
+  - override /splitter: nuplan
+  - override /model: tf_multi
+  - override /scenario_filter: training_scenarios
+  - override /training_metric:
+      - avg_displacement_error
+      - avg_heading_error
+      - final_displacement_error
+      - final_heading_error
+      - min_ade_6
+
+model:
+  num_modes: 6
+  predict_agents: false           
+  use_ego_history: false
+  state_dropout: 0.75
+  num_output_features: 240        # 80 * 3
+  future_trajectory_sampling:
+    num_poses: 80                 # 0.1 s spacing, matches the LQR tracker
+    time_horizon: 8.0
