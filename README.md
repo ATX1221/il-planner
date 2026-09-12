@@ -9,6 +9,8 @@ Evaluated on Test14-random and Test14-hard over the 1,349 held-out nuPlan test l
 
 **`tf_multi` — 755K parameters, 634,630 training scenarios, 62.15 NR-CLS on Test14-random.**
 
+https://github.com/user-attachments/assets/f4290524-6a28-4597-856f-87eeb19d55c6
+
 ## What this project set out to test
 
 Whether a small planner's closed-loop score is limited by **how much** data it sees or by
@@ -20,27 +22,127 @@ model, features, validation set and benchmark are held fixed.
 
 ## Results
 
-Baselines are PlanTF's published numbers.
+<p>Baselines are PlanTF's published numbers.</p>
 
-| Type | Method | rand OLS | rand NR-CLS | rand R-CLS | hard OLS | hard NR-CLS | hard R-CLS |
-|---|---|---|---|---|---|---|---|
-| Expert | LogReplay | 100.0 | 94.03 | 75.86 | 100.0 | 85.96 | 68.80 |
-| Rule | PDM-Closed | 46.32 | 90.05 | 91.64 | 26.43 | 65.07 | 75.18 |
-| Rule | IDM | 34.15 | 70.39 | 72.42 | 20.07 | 56.16 | 62.26 |
-| Learning | PlanTF | 87.07 | 86.48 | 80.59 | 83.32 | 72.68 | 61.70 |
-| Learning | PlanCNN | 62.93 | 69.66 | 67.54 | 52.40 | 49.47 | 52.16 |
-| Learning | UrbanDriver | 82.44 | 63.27 | 61.02 | 76.90 | 51.54 | 49.07 |
-| **Learning** | **`tf_multi/noego/balanced635k`** | **66.19** | **62.15** | **60.12** | **64.22** | **44.16** | **43.63** |
-| Learning | GC-PGP | 77.33 | 55.99 | 51.39 | 73.78 | 43.22 | 39.63 |
-| Learning | PDM-Open | 84.14 | 52.80 | 57.23 | 79.06 | 33.51 | 35.83 |
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Type</th>
+      <th rowspan="2">Planner</th>
+      <th colspan="3">Test14-Random</th>
+      <th colspan="3">Test14-Hard</th>
+    </tr>
+    <tr>
+      <th>OLS↑</th>
+      <th>NR-CLS↑</th>
+      <th>R-CLS↑</th>
+      <th>OLS↑</th>
+      <th>NR-CLS↑</th>
+      <th>R-CLS↑</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Expert</td>
+      <td>LogReplay</td>
+      <td>100.0</td>
+      <td>94.03</td>
+      <td>75.86</td>
+      <td>100.0</td>
+      <td>85.96</td>
+      <td>68.80</td>
+    </tr>
+    <tr>
+      <td>Rule</td>
+      <td>PDM-Closed</td>
+      <td>46.32</td>
+      <td>90.05</td>
+      <td>91.64</td>
+      <td>26.43</td>
+      <td>65.07</td>
+      <td>75.18</td>
+    </tr>
+    <tr>
+      <td>Rule</td>
+      <td>IDM</td>
+      <td>34.15</td>
+      <td>70.39</td>
+      <td>72.42</td>
+      <td>20.07</td>
+      <td>56.16</td>
+      <td>62.26</td>
+    </tr>
+    <tr>
+      <td>Learning</td>
+      <td>PlanTF</td>
+      <td>87.07</td>
+      <td>86.48</td>
+      <td>80.59</td>
+      <td>83.32</td>
+      <td>72.68</td>
+      <td>61.70</td>
+    </tr>
+    <tr>
+      <td>Learning</td>
+      <td>PlanCNN</td>
+      <td>62.93</td>
+      <td>69.66</td>
+      <td>67.54</td>
+      <td>52.40</td>
+      <td>49.47</td>
+      <td>52.16</td>
+    </tr>
+    <tr>
+      <td>Learning</td>
+      <td>UrbanDriver</td>
+      <td>82.44</td>
+      <td>63.27</td>
+      <td>61.02</td>
+      <td>76.90</td>
+      <td>51.54</td>
+      <td>49.07</td>
+    </tr>
+    <tr>
+      <td><b>Learning</b></td>
+      <td><b><code>tf_multi/noego/balanced635k</code></b></td>
+      <td><b>66.19</b></td>
+      <td><b>62.15</b></td>
+      <td><b>60.12</b></td>
+      <td><b>64.22</b></td>
+      <td><b>44.16</b></td>
+      <td><b>43.63</b></td>
+    </tr>
+    <tr>
+      <td>Learning</td>
+      <td>GC-PGP</td>
+      <td>77.33</td>
+      <td>55.99</td>
+      <td>51.39</td>
+      <td>73.78</td>
+      <td>43.22</td>
+      <td>39.63</td>
+    </tr>
+    <tr>
+      <td>Learning</td>
+      <td>PDM-Open</td>
+      <td>84.14</td>
+      <td>52.80</td>
+      <td>57.23</td>
+      <td>79.06</td>
+      <td>33.51</td>
+      <td>35.83</td>
+    </tr>
+  </tbody>
+</table>
+
 
 ### Ablations — Test14-random, NR-CLS, 261 scenarios
 
 | run | modes | ego hist | training set | val ADE | NR-CLS |
 |---|---|---|---|---|---|
+| `tf_multi/ego/balanced635k` | 6 | on | 634,630 balanced | 1.972 | 51.84 |
 | `tf_multi/noego/balanced635k` | 6 | off | 634,630 balanced, 6.29% turns | 2.497 | **62.15** |
 | `tf_multi/noego/uniform635k` | 6 | off | 634,630 proportional, 0.809% turns | 2.465 | 56.44 |
-| `tf_single/ego/balanced635k` | 1 | on | 634,630 balanced | 1.972 | 51.84 |
 | `tf_single/ego/mini13k` | 1 | on | 13,400 | — | 23.21 |
 
 "Balanced" and "proportional" describe how the training set was drawn from nuPlan's raw
