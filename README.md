@@ -314,3 +314,7 @@ Built on [nuplan-devkit](https://github.com/motional/nuplan-devkit); the initial
 adapted from its vector-map baseline. Encoder design, the ego-history ablation and the
 Test14 benchmark definitions follow [planTF](https://github.com/jchengai/planTF). PDM
 baselines from [tuplan_garage](https://github.com/autonomousvision/tuplan_garage).
+
+## AI Assistance Statement
+
+AI tools were used to assist with code editing, refactoring, debugging, documentation, and test development. The project design, experimental methodology, ablation studies, evaluation, and interpretation of results were directed and validated by the author.
